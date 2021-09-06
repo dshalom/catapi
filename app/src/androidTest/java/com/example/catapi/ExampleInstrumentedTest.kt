@@ -9,6 +9,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock.*
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -34,14 +35,16 @@ class ChangeTextBehaviorTest {
     @Before
     fun setUp() {
 
+        Log.e("dsds", "setup " )
 
-        wireMockServer = WireMockServer(8089)
+
+        wireMockServer = WireMockServer(8080)
 
        // configureFor("localhost", 8089)
 
         wireMockServer.start()
 
-        configureFor("localhost", 8089);
+       // configureFor("localhost", 8089);
 
         //No-args constructor will start on port 8080, no HTTPS
 
@@ -53,10 +56,15 @@ class ChangeTextBehaviorTest {
 
     }
 
+    @After
+    fun tearDown() {
+        wireMockServer.stop()
+    }
+
     @Test
     fun changeText_sameActivity() {
 
-        stubFor(get(urlEqualTo("/v1/images/search"))
+        stubFor(get(urlPathMatching("/v1/images/search"))
             .willReturn(aResponse()
                 .withHeader("Content-Type", "text/plain")
                 .withBody("Hello world!")));
@@ -64,6 +72,7 @@ class ChangeTextBehaviorTest {
         // Type text and then press the button.
         onView(withId(R.id.iv))
             .check(matches(isDisplayed()));
+
 
     }
 }

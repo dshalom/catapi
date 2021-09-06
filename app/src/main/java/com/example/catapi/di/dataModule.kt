@@ -1,6 +1,7 @@
 package com.example.catapi.di
 
 
+import android.util.Log
 import com.example.catapi.BuildConfig
 import com.example.catapi.data.CatService
 import dagger.Module
@@ -18,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object DataModule {
 
     @Provides
-    fun provideBaseUrl() = "https://api.thecatapi.com/v1/"
+    fun provideBaseUrl() = "http://localhost:8080/v1/"
 
     @Provides
     fun provideOkHttpClient() = if (BuildConfig.DEBUG) {
@@ -34,11 +35,17 @@ object DataModule {
     }
 
     @Provides
-    fun provideRetrofit(okHttpClient: OkHttpClient, BASE_URL: String): Retrofit = Retrofit.Builder()
-        .addConverterFactory(GsonConverterFactory.create())
-        .baseUrl(BASE_URL)
-        .client(okHttpClient)
-        .build()
+    fun provideRetrofit(okHttpClient: OkHttpClient, BASE_URL: String): Retrofit {
+
+        println("dsds BASE_URL $BASE_URL")
+
+
+        return Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(BASE_URL)
+            .client(okHttpClient)
+            .build()
+    }
 
     @Provides
     fun provideService(retrofit: Retrofit): CatService {
