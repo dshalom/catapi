@@ -11,20 +11,13 @@ class Asset(private val name: String, private val assetPath: String, private val
     TextFile(uri(assetPath)) {
 
     override fun name(): String {
-        Log.d("dsds", "Asset.name $name")
         return name
     }
 
     override fun getStream(): InputStream =
         try {
-            Log.d("dsds", "Asset.getStream $assetPath")
-
-//            Log.d("dsds", "stack ${buildStackTraceString(Thread.currentThread().stackTrace)}")
-
-
-            // TODO find out why mapping files require /name after assetPath but __files do not
             assets.open("$assetPath${if (name.isEmpty()) "" else "/"}$name")
-        } catch (e: FileNotFoundException) { // TODO find out why are mappings not using this class
+        } catch (e: FileNotFoundException) {
             Log.d("dsds", "Asset.getStream exception ${e.message}")
             throw Exception()
         }
@@ -41,17 +34,14 @@ class Asset(private val name: String, private val assetPath: String, private val
     }
 
     override fun getPath(): String {
-        Log.d("dsds", "Asset.getPath $assetPath")
         return assetPath
     }
 
     override fun readContents(): ByteArray {
-        Log.d("dsds", "Asset.readContents $stream")
         return stream.readBytes()
     }
 
     override fun readContentsAsString(): String {
-        Log.d("dsds", "Asset.readContentsAsString ${readContents()}")
         return String(readContents())
     }
 

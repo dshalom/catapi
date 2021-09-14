@@ -38,8 +38,6 @@ class MainActivity : AppCompatActivity() {
             Log.i("dsds", "response: $response")
 
             Picasso.get().load(response[0].url).into(image);
-
         }
-
     }
 }

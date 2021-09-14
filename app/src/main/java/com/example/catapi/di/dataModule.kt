@@ -36,10 +36,6 @@ object DataModule {
 
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient, BASE_URL: String): Retrofit {
-
-        println("dsds BASE_URL $BASE_URL")
-
-
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(BASE_URL)

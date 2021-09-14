@@ -15,12 +15,10 @@ class AssetsFileSource(
 ) : FileSource {
 
     override fun getBinaryFileNamed(name: String): BinaryFile? {
-        Log.d("dsds", "getBinaryFileNamed $name")
         return getTextFileNamed(name)
     }
 
     override fun getTextFileNamed(name: String): TextFile? {
-        Log.d("dsds", "getTextFileNamed $name")
         val pathSep = with(name) {
             when {
                 startsWith(URI_PATH_SEPARATOR) -> ""
@@ -34,7 +32,6 @@ class AssetsFileSource(
     override fun createIfNecessary() {}
 
     override fun child(subDirectoryName: String): AssetsFileSource {
-        Log.d("dsds", "child $subDirectoryName")
         return AssetsFileSource(
             subDirectoryName = this.subDirectoryName +
                     URI_PATH_SEPARATOR +
@@ -43,36 +40,25 @@ class AssetsFileSource(
     }
 
     override fun getPath(): String {
-        Log.d("dsds", "getPath $subDirectoryName")
         return subDirectoryName
     }
 
-    override fun getUri(): Nothing? {
-        // TODO do we need to define this? asset://.../mappings
-        Log.d("dsds", "getUri")
-        return null
-    }
+    override fun getUri() = null
 
     override fun listFilesRecursively(): ArrayList<TextFile> {
-
-        Log.d("dsds", "listFilesRecursively")
         return ArrayList<TextFile>().also {
             collectAssetFiles(subDirectoryName, it)
         }
     }
 
     private fun collectAssetFiles(path: String, collector: MutableList<TextFile>) {
-        Log.d("dsds", "collectAssetFiles $path")
         context.assets.list(path)
             ?.onEach {
                 val uri = "raw://$path/$it"
-                Log.d("dsds", "collectAssetFiles 2 $uri $it")
-//                collector += TextFile(URI(uri))
                 collector += Asset(it, path, context.assets)
-            } // "$RAW_SCHEME://$name"
+            }
             ?.forEach {
                 val path1 = "$path/$it"
-                Log.d("dsds", "collectAssetFiles 3 $path1")
                 collectAssetFiles(path1, collector)
             }
     }

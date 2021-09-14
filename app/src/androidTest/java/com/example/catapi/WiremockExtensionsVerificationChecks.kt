@@ -3,7 +3,6 @@ package com.example.catapi
 import android.util.Log
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import com.example.catapi.utils.AssetsFileSource
-import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig
 import com.github.tomakehurst.wiremock.junit.WireMockRule
@@ -20,18 +19,15 @@ class WiremockExtensionsVerificationChecks {
             .fileSource(AssetsFileSource(subDirectoryName = "wiremock-checks"))
     )
 
-    init {
-        Log.d("dsds", "init")
-    }
-
     @Before
     fun setUp() {
-        Log.d("dsds", "setup")
+        val mappings = URL("http://localhost:${rule.port()}/__admin/mappings").readText()
+        Log.d("dsds", "mappings from wiremock: $mappings")
     }
 
     @Test
     fun loadsTextFileUsingPathAsNameNotQueryParams() {
-        WireMock.stubFor(
+        stubFor(
             get(anyUrl())
                 .willReturn(
                     aResponse()
@@ -44,10 +40,14 @@ class WiremockExtensionsVerificationChecks {
     }
 
     @Test
-    fun loadsTextFileUsingPathAsNameNotQueryParams2() {
-        val mappings = URL("http://localhost:${rule.port()}/__admin/mappings").readText()
-        Log.d("dsds", "mappings from wiremock: $mappings")
+    fun loadsMappings1() {
         val result = URL("http://localhost:${rule.port()}/hellomapping").readText()
         assertThat(result, `is`("hi there!5"))
+    }
+
+    @Test
+    fun loadsMappings2() {
+        val result = URL("http://localhost:${rule.port()}/hellomapping2").readText()
+        assertThat(result, `is`("hi there!2"))
     }
 }
