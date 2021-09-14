@@ -34,26 +34,13 @@ class ChangeTextBehaviorTest {
 
     @Before
     fun setUp() {
-
-        Log.e("dsds", "setup " )
-
+        Log.d("dsds", "setup " )
 
         wireMockServer = WireMockServer(8080)
-
-       // configureFor("localhost", 8089)
-
         wireMockServer.start()
 
-       // configureFor("localhost", 8089);
-
-        //No-args constructor will start on port 8080, no HTTPS
-
-        Log.e("dsds", "is running " + wireMockServer.isRunning)
-        Log.e("dsds", "is running " + wireMockServer.port())
-
-        print("-----dsds")
-
-
+        Log.d("dsds", "is running " + wireMockServer.isRunning)
+        Log.d("dsds", "is running " + wireMockServer.port())
     }
 
     @After
@@ -72,7 +59,6 @@ class ChangeTextBehaviorTest {
         // Type text and then press the button.
         onView(withId(R.id.iv))
             .check(matches(isDisplayed()));
-
 
     }
 }

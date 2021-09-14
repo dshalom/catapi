@@ -26,7 +26,7 @@ class MyAssetsFileSource(
             }
         }
         val assetPath = subDirectoryName + pathSep + name
-        return Asset(assetPath, context.assets)
+        return Asset(name, assetPath, context.assets)
     }
 
     override fun createIfNecessary() {}

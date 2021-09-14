@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun fetchData() {
+        Log.i("dsds", "fetchData called")
 
         lifecycleScope.launchWhenCreated {
 
@@ -37,7 +38,6 @@ class MainActivity : AppCompatActivity() {
             Log.i("dsds", "response: $response")
 
             Picasso.get().load(response[0].url).into(image);
-
 
         }
 
