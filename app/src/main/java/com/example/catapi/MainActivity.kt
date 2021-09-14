@@ -8,7 +8,6 @@ import androidx.lifecycle.lifecycleScope
 import com.example.catapi.data.CatService
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -32,7 +31,6 @@ class MainActivity : AppCompatActivity() {
 
         lifecycleScope.launchWhenCreated {
 
-            delay(2000)
             val response = catService.getSupportedLanguages()
 
             Log.i("dsds", "response: $response")

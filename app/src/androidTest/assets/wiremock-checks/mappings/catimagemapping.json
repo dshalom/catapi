@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/v1/images/search"
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "catimage",
+    "headers": {
+      "Content-Type": "text/plain"
+    }
+  }
+}
