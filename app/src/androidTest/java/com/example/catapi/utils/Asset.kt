@@ -23,7 +23,7 @@ class Asset(private val name: String, private val assetPath: String, private val
 
 
             // TODO find out why mapping files require /name after assetPath but __files do not
-            assets.open("$assetPath/$name")
+            assets.open("$assetPath${if (name.isEmpty()) "" else "/"}$name")
         } catch (e: FileNotFoundException) { // TODO find out why are mappings not using this class
             Log.d("dsds", "Asset.getStream exception ${e.message}")
             throw Exception()

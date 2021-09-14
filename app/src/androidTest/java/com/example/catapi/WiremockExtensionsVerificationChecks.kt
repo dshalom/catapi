@@ -48,6 +48,6 @@ class WiremockExtensionsVerificationChecks {
         val mappings = URL("http://localhost:${rule.port()}/__admin/mappings").readText()
         Log.d("dsds", "mappings from wiremock: $mappings")
         val result = URL("http://localhost:${rule.port()}/hellomapping").readText()
-        assertThat(result, `is`("Hello world!"))
+        assertThat(result, `is`("hi there!5"))
     }
 }
